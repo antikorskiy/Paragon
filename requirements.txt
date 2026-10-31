@@ -1,0 +1,14 @@
+# Paragon Chat runtime dependencies
+# Python 3.8+ required (uses asyncio, dataclasses, tkinter from stdlib)
+
+# Ed25519 keys, XChaCha20-Poly1305 sealed frames
+PyNaCl>=1.4.0
+
+# Argon2id KDF for the encrypted .paragon account file
+argon2-cffi>=20.1.0
+
+# AES-GCM for account file at-rest encryption
+cryptography>=3.4.0
+
+# SPAKE2-Symmetric PAKE for the peer handshake
+spake2>=0.8

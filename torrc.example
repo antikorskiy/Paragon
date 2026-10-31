@@ -1,0 +1,68 @@
+# =====================================================================
+# Paragon Chat - example Tor configuration (HiddenService)
+# =====================================================================
+#
+# This is an EXAMPLE. Do NOT copy this file over your real torrc verbatim.
+# Merge the lines you need into the torrc of your Tor instance.
+#
+# On Windows, torrc is usually:
+#   C:\Users\<you>\Desktop\Tor Browser\Browser\TorBrowser\Data\Tor\torrc
+# or for a standalone tor install:
+#   C:\Program Files\Tor\torrc
+#
+# After editing, RESTART Tor so it loads the HiddenService keys.
+# =====================================================================
+
+
+# ---------------------------------------------------------------------
+# 1) SOCKS port
+# ---------------------------------------------------------------------
+# Paragon connects OUT to remote .onion peers through this SOCKS5 proxy.
+# Default 9050 matches a standalone Tor daemon.
+# Tor Browser uses 9150 instead; if so, also set PARAGON_SOCKS_PORT=9150
+# before launching Paragon.
+SocksPort 9050
+
+# ---------------------------------------------------------------------
+# 2) HiddenService (your own .onion address)
+# ---------------------------------------------------------------------
+# HiddenServiceDir  = the folder Paragon wrote on "Generate onion identity".
+#                     It contains hostname, hs_ed25519_public_key,
+#                     hs_ed25519_secret_key. Do NOT commit this folder.
+# HiddenServicePort = <VIRTUAL_PORT> <TARGET_HOST>:<TARGET_PORT>
+#                     VIRTUAL_PORT = the port advertised on your .onion
+#                                    (must match the "Port" in Paragon ID)
+#                     TARGET       = where Paragon actually listens locally
+#                                    (127.0.0.1 + listen port; default 9001)
+#
+# Example: identity generated with Port = 9001, HS dir = .\hs_9001
+#
+HiddenServiceDir C:\Paragon\hs_9001
+HiddenServicePort 9001 127.0.0.1:9001
+
+# If Paragon listens on a different local port (PARAGON_LISTEN_PORT), use:
+#   HiddenServicePort 9001 127.0.0.1:9010
+
+# If you run MULTIPLE identities, add one HiddenService block per identity:
+#   HiddenServiceDir C:\Paragon\hs_9001
+#   HiddenServicePort 9001 127.0.0.1:9001
+#
+#   HiddenServiceDir C:\Paragon\hs_9002
+#   HiddenServicePort 9002 127.0.0.1:9002
+
+
+# ---------------------------------------------------------------------
+# 3) Optional: onion v3 only
+# ---------------------------------------------------------------------
+# Paragon only ever talks to .onion when onion_only=True, so this is
+# informational. v3 onions are required for modern Tor anyway.
+# HiddenServiceVersion 3
+
+
+# ---------------------------------------------------------------------
+# 4) Optional: faster descriptor publish (default is fine)
+# ---------------------------------------------------------------------
+# Publishing your onion descriptor normally takes 30-60 seconds after
+# Tor restart. Leave defaults unless you know what you are doing.
+#
+# PublishHidServDescriptors 1
